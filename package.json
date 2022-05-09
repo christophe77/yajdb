@@ -2,6 +2,16 @@
   "name": "yajdb",
   "version": "1.0.1",
   "description": "yet another JSON database",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/christophe77/yajdb"
+  },
+  "keywords": [
+    "json",
+    "flat",
+    "db",
+    "database"
+  ],
   "engines": {
     "node": ">= 11"
   },

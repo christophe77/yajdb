@@ -1,6 +1,6 @@
 {
   "name": "yajdb",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "yet another JSON database",
   "repository": {
     "type": "git",

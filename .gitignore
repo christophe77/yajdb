@@ -1,6 +1,3 @@
-# Dist
-dist/*
-
 # Storage
 src/storage/*.json
 dist/cjs/storage/*.json

@@ -1,5 +1,6 @@
-# Dist
-dist/
+# Storage
+dist/cjs/storage/*.json
+dist/esm/storage/*.json
 # Logs
 logs
 *.log

@@ -26,24 +26,26 @@ Error handling is not done using "throw", responses are returned after each acti
     const { database } = yajdb;
     const dbName = "cars";
 
+#### create database
+
     // sync
-    // create database
     const createDbResponse = database.create(dbName);
     console.log(createDbResponse);
 
-    // delete database
-    const deleteDbResponse = database.drop(dbName);
-    console.log(deleteDbResponse);
-
     // async
-    // create database
     async function createMyDb(myDbName){
         const createDbAsyncResponse = await database.createAsync(myDbName);
         console.log(createDbAsyncResponse);
     }
     createMyDb(dbName);
 
-    // delete database
+#### delete database
+
+    // sync
+    const deleteDbResponse = database.drop(dbName);
+    console.log(deleteDbResponse);
+
+    // async
     async function deleteMyDb(myDbName){
         const deleteDbAsyncResponse = await database.dropAsync(myDbName);
         console.log(deleteDbAsyncResponse);
@@ -66,7 +68,8 @@ Error handling is not done using "throw", responses are returned after each acti
         { attId: "2", color: "blue", brand: "mercedes" },
     ];
 
-    // create table
+#### create table
+
     // sync
     const createTableResponse = table.create(dbName, tableName, tableStructure);
     console.log(createTableResponse);
@@ -78,7 +81,8 @@ Error handling is not done using "throw", responses are returned after each acti
     }
     createMyTable(dbName, tableName, tableStructure);
 
-    // delete table
+#### delete table
+
     // sync
     const deleteTableResponse = table.drop(dbName, tableName);
     console.log(deleteTableResponse);
@@ -90,7 +94,8 @@ Error handling is not done using "throw", responses are returned after each acti
     }
     deleteMyTable(dbName, tableName);
 
-    // insert into table
+#### insert into table
+
     // sync
     const insertResponse = table.insert(dbName, tableName, values);
     console.log(insertResponse);
@@ -100,9 +105,10 @@ Error handling is not done using "throw", responses are returned after each acti
         const insertAsyncResponse = await table.insert(myDbName, myTableName, myValues);
         console.log(insertAsyncResponse)
     }
-    deleteMyTable(dbName, tableName);
+    insertIntoTable(dbName, tableName, values);
 
-    // select from table
+#### select from table
+
     // sync
     const searchRowPayload = {"attId":"1"};
     const selectResponse = table.select(dbName, tableName, searchRowPayload);
@@ -115,7 +121,8 @@ Error handling is not done using "throw", responses are returned after each acti
     }
     selectFromTable(dbName, tableName, searchRowPayload);
 
-    // update row
+#### update row
+
     // sync
     const searchPayload = {"attId":"1"};
     const updatePayload = {"color":"white"};

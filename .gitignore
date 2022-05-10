@@ -1,7 +1,5 @@
 # Dist
-dist/storage/*.json
-# Storage
-src/storage/*.json
+dist
 # Logs
 logs
 *.log

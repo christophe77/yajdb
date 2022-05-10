@@ -1,4 +1,5 @@
-
+# Dist
+dist/*
 # Storage
 src/storage/*.json
 # Logs

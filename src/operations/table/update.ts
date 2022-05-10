@@ -60,7 +60,7 @@ export async function updateAsync(
         const entries = searchEntries(tableName, tableData, searchPayload);
         if (entries.length > 0) {
           const updatedTableData = updateTableDatas(tableData, entries, replacePayload)
-          await fs.promises.writeFile(tableFile, JSON.stringify(updatedTableData));
+          await fs.promises.writeFile(tableFile, updatedTableData);
         }
         return {
           success: true,

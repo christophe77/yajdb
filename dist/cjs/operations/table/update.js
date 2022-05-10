@@ -56,7 +56,7 @@ async function updateAsync(dbName, tableName, searchPayload, replacePayload) {
                 const entries = (0, utils_1.searchEntries)(tableName, tableData, searchPayload);
                 if (entries.length > 0) {
                     const updatedTableData = (0, utils_1.updateTableDatas)(tableData, entries, replacePayload);
-                    await fs_1.default.promises.writeFile(tableFile, JSON.stringify(updatedTableData));
+                    await fs_1.default.promises.writeFile(tableFile, updatedTableData);
                 }
                 return {
                     success: true,

@@ -102,7 +102,7 @@ Error handling is not done using "throw", responses are returned after each acti
 
     // async
     async function insertIntoTable(myDbName, myTableName, myValues){
-        const insertAsyncResponse = await table.insert(myDbName, myTableName, myValues);
+        const insertAsyncResponse = await table.insertAsync(myDbName, myTableName, myValues);
         console.log(insertAsyncResponse)
     }
     insertIntoTable(dbName, tableName, values);
@@ -116,7 +116,7 @@ Error handling is not done using "throw", responses are returned after each acti
 
     // async
     async function selectFromTable(myDbName, myTableName, myPayload){
-        const selectAsyncResponse = await table.select(myDbName, myTableName, myPayload);
+        const selectAsyncResponse = await table.selectAsync(myDbName, myTableName, myPayload);
         console.log(selectAsyncResponse)
     }
     selectFromTable(dbName, tableName, searchRowPayload);
@@ -131,7 +131,7 @@ Error handling is not done using "throw", responses are returned after each acti
 
     // async
     async function updateRow(myDbName, myTableName, mySearchPayload, myUpdatePayload){
-        const updateAsyncResponse = await table.update(myDbName, myTableName, mySearchPayload, myUpdatePayload);
+        const updateAsyncResponse = await table.updateAsync(myDbName, myTableName, mySearchPayload, myUpdatePayload);
         console.log(updateAsyncResponse)
     }
     updateRow(dbName, tableName, searchPayload, updatePayload);

@@ -17,33 +17,35 @@ Error handling is not done using "throw", responses are returned after each acti
 
 ## Import
 
-    const yajdb = require("yajdb");
+    const yajdb = require("yajdb").default;
+    // or
+    import yajdb from "yajdb";
 
 ### DB API
 
-    const { db } = yajdb;
+    const { database } = yajdb;
     const dbName = "cars";
 
     // sync
-    // create db
-    const createDbResponse = db.create(dbName);
+    // create database
+    const createDbResponse = database.create(dbName);
     console.log(createDbResponse);
 
-    // delete db
-    const deleteDbResponse = db.drop(dbName);
+    // delete database
+    const deleteDbResponse = database.drop(dbName);
     console.log(deleteDbResponse);
 
     // async
-    // create db
+    // create database
     async function createMyDb(myDbName){
-        const createDbAsyncResponse = await db.createAsync(myDbName);
+        const createDbAsyncResponse = await database.createAsync(myDbName);
         console.log(createDbAsyncResponse);
     }
     createMyDb(dbName);
 
-    // delete db
+    // delete database
     async function deleteMyDb(myDbName){
-        const deleteDbAsyncResponse = await db.dropAsync(myDbName);
+        const deleteDbAsyncResponse = await database.dropAsync(myDbName);
         console.log(deleteDbAsyncResponse);
     }
     deleteMyDb(dbName);
@@ -66,7 +68,7 @@ Error handling is not done using "throw", responses are returned after each acti
 
     // create table
     // sync
-    const createTableResponse = table.create(dbName, tableNam, tableStructuree);
+    const createTableResponse = table.create(dbName, tableName, tableStructure);
     console.log(createTableResponse);
 
     // async

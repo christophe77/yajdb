@@ -1,9 +1,7 @@
 import fs from "fs";
-import path from "path";
-const fileExistsAsync = async (filePath) => !!(await fs.promises.stat(filePath).catch((_) => false));
-const tableFullPath = (dbName, tableName) => `${path.join(dbRootPath, dbName, tableName)}.json`;
+import { fileExistsAsync, fullJsonPath } from "../../utils";
 export function drop(dbName, tableName) {
-    const tableFile = tableFullPath(dbName, tableName);
+    const tableFile = fullJsonPath([dbName, tableName]);
     if (fs.existsSync(tableFile)) {
         try {
             fs.unlinkSync(tableFile);
@@ -27,7 +25,7 @@ export function drop(dbName, tableName) {
     }
 }
 export async function dropAsync(dbName, tableName) {
-    const tableFile = tableFullPath(dbName, tableName);
+    const tableFile = fullJsonPath([dbName, tableName]);
     const dbExists = await fileExistsAsync(tableFile);
     if (dbExists) {
         try {

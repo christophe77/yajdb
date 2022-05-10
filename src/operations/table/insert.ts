@@ -1,19 +1,13 @@
 import fs from "fs";
-import path from "path";
 import { CommonOperationResponse, StringMap} from "../../types/operations";
-
-const fileExistsAsync = async (filePath: string) =>
-  !!(await fs.promises.stat(filePath).catch((_) => false));
-
-const tableFullPath = (dbName: string, tableName: string): string =>
-  `${path.join(dbRootPath, dbName, tableName)}.json`;
+import { fileExistsAsync, fullJsonPath } from "../../utils";
 
 export function insert(
   dbName: string,
   tableName: string,
   values: StringMap[]
 ): CommonOperationResponse {
-  const tableFile = tableFullPath(dbName, tableName);
+  const tableFile = fullJsonPath([dbName, tableName]);
   if (fs.existsSync(tableFile)) {
     try {
       const rawData = fs.readFileSync(tableFile);
@@ -44,7 +38,7 @@ export async function insertAsync(
   tableName: string,
   values: StringMap[]
 ): Promise<CommonOperationResponse> {
-  const tableFile = tableFullPath(dbName, tableName);
+  const tableFile = fullJsonPath([dbName, tableName]);
   const tableExists = await fileExistsAsync(tableFile);
   if (tableExists) {
     try {

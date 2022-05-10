@@ -14,7 +14,7 @@
     "database"
   ],
   "engines": {
-    "node": ">= 11"
+    "node": "12.x || 13.x || 14.x || >= 15"
   },
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

@@ -104,8 +104,8 @@ Error handling is not done using "throw", responses are returned after each acti
 
     // select from table
     // sync
-    const payload = {"attId":"1"};
-    const selectResponse = table.select(dbName, tableName, payload);
+    const searchRowPayload = {"attId":"1"};
+    const selectResponse = table.select(dbName, tableName, searchRowPayload);
     console.log(selectResponse);
 
     // async
@@ -113,9 +113,23 @@ Error handling is not done using "throw", responses are returned after each acti
         const selectAsyncResponse = await table.select(myDbName, myTableName, myPayload);
         console.log(selectAsyncResponse)
     }
-    selectFromTable(dbName, tableName, payload);
+    selectFromTable(dbName, tableName, searchRowPayload);
+
+    // update row
+    // sync
+    const searchPayload = {"attId":"1"};
+    const updatePayload = {"color":"white"};
+    const updateResponse = table.update(dbName, tableName, searchPayload, updatePayload);
+    console.log(updateResponse);
+
+    // async
+    async function updateRow(myDbName, myTableName, mySearchPayload, myUpdatePayload){
+        const updateAsyncResponse = await table.update(myDbName, myTableName, mySearchPayload, myUpdatePayload);
+        console.log(updateAsyncResponse)
+    }
+    updateRow(dbName, tableName, searchPayload, updatePayload);
 
 ### IN PROGRESS
 
-- update row
+- select all
 - delete row

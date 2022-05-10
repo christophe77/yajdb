@@ -2,6 +2,7 @@ import { create, createAsync } from "./create";
 import { drop, dropAsync } from "./drop";
 import { insert, insertAsync } from "./insert";
 import { select, selectAsync } from "./select";
+import { update, updateAsync } from "./update";
 const table = {
     create,
     drop,
@@ -10,6 +11,8 @@ const table = {
     insert,
     insertAsync,
     select,
-    selectAsync
+    selectAsync,
+    update,
+    updateAsync,
 };
 export default table;

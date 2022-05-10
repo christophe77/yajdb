@@ -1,9 +1,7 @@
 import fs from "fs";
-import path from "path";
-const fileExistsAsync = async (filePath) => !!(await fs.promises.stat(filePath).catch((_) => false));
-const tableFullPath = (dbName, tableName) => `${path.join(dbRootPath, dbName, tableName)}.json`;
+import { fileExistsAsync, fullJsonPath } from "../../utils";
 export function insert(dbName, tableName, values) {
-    const tableFile = tableFullPath(dbName, tableName);
+    const tableFile = fullJsonPath([dbName, tableName]);
     if (fs.existsSync(tableFile)) {
         try {
             const rawData = fs.readFileSync(tableFile);
@@ -31,7 +29,7 @@ export function insert(dbName, tableName, values) {
     }
 }
 export async function insertAsync(dbName, tableName, values) {
-    const tableFile = tableFullPath(dbName, tableName);
+    const tableFile = fullJsonPath([dbName, tableName]);
     const tableExists = await fileExistsAsync(tableFile);
     if (tableExists) {
         try {

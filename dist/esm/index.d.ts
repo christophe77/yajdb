@@ -14,6 +14,8 @@ declare const yajdb: {
         insertAsync: typeof import("./operations/table/insert").insertAsync;
         select: typeof import("./operations/table/select").select;
         selectAsync: typeof import("./operations/table/select").selectAsync;
+        update: typeof import("./operations/table/update").update;
+        updateAsync: typeof import("./operations/table/update").updateAsync;
     };
 };
 export default yajdb;

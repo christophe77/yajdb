@@ -1,18 +1,13 @@
 import fs from "fs";
 import path from "path";
 import { CommonOperationResponse } from "../../types/operations";
-
-const fileExistsAsync = async (filePath: string) =>
-  !!(await fs.promises.stat(filePath).catch((_) => false));
-
-const tableFullPath = (dbName: string, tableName: string): string =>
-  `${path.join(dbRootPath, dbName, tableName)}.json`;
+import { fileExistsAsync, fullJsonPath } from "../../utils";
 
 export function drop(
   dbName: string,
   tableName: string
 ): CommonOperationResponse {
-  const tableFile = tableFullPath(dbName, tableName);
+  const tableFile = fullJsonPath([dbName, tableName]);
   if (fs.existsSync(tableFile)) {
     try {
       fs.unlinkSync(tableFile);
@@ -37,7 +32,7 @@ export async function dropAsync(
   dbName: string,
   tableName: string
 ): Promise<CommonOperationResponse> {
-  const tableFile = tableFullPath(dbName, tableName);
+  const tableFile = fullJsonPath([dbName, tableName]);
   const dbExists = await fileExistsAsync(tableFile);
   if (dbExists) {
     try {

@@ -1,11 +1,12 @@
 import fs from "fs";
 import { CommonOperationResponse, StringMap } from "../../types/operations";
-import { searchEntries, fileExistsAsync, fullJsonPath } from "../../utils";
+import { searchEntries, updateTableDatas, fileExistsAsync, fullJsonPath } from "../../utils";
 
-export function select(
+export function update(
   dbName: string,
   tableName: string,
-  searchPayload: StringMap
+  searchPayload: StringMap,
+  replacePayload: StringMap
 ): CommonOperationResponse {
   const tableFile = fullJsonPath([dbName, tableName]);
   if (fs.existsSync(tableFile)) {
@@ -14,10 +15,14 @@ export function select(
       const tableData = JSON.parse(rawData.toString());
       const firstEntry = tableData[tableName][0];
       if (firstEntry) {
-        const result = searchEntries(tableName, tableData, searchPayload);
+        const entries = searchEntries(tableName, tableData, searchPayload);
+        if (entries.length > 0) {
+          const updatedTableData = updateTableDatas(tableData, entries, replacePayload)
+          fs.writeFileSync(tableFile, updatedTableData);
+        }
         return {
           success: true,
-          message: JSON.stringify(result),
+          message: "row(s) updated",
         };
       }
       return {
@@ -27,7 +32,7 @@ export function select(
     } catch (error) {
       return {
         success: false,
-        message: `error selecting payload`,
+        message: `error updating rows`,
       };
     }
   } else {
@@ -38,23 +43,28 @@ export function select(
   }
 }
 
-export async function selectAsync(
+export async function updateAsync(
   dbName: string,
   tableName: string,
-  searchPayload: StringMap
+  searchPayload: StringMap,
+  replacePayload: StringMap
 ): Promise<CommonOperationResponse> {
   const tableFile = fullJsonPath([dbName, tableName]);
-  const tableExists = await fileExistsAsync(tableFile);
-  if (tableExists) {
+  const fileExists = await fileExistsAsync(tableFile);
+  if (fileExists) {
     try {
-      const rawData = fs.readFileSync(tableFile);
+      const rawData = await fs.promises.readFile(tableFile);
       const tableData = JSON.parse(rawData.toString());
       const firstEntry = tableData[tableName][0];
       if (firstEntry) {
-        const result = searchEntries(tableName, tableData, searchPayload);
+        const entries = searchEntries(tableName, tableData, searchPayload);
+        if (entries.length > 0) {
+          const updatedTableData = updateTableDatas(tableData, entries, replacePayload)
+          await fs.promises.writeFile(tableFile, JSON.stringify(updatedTableData));
+        }
         return {
           success: true,
-          message: JSON.stringify(result),
+          message: "row(s) updated",
         };
       }
       return {
@@ -64,7 +74,7 @@ export async function selectAsync(
     } catch (error) {
       return {
         success: false,
-        message: `error selecting payload`,
+        message: `error updating rows`,
       };
     }
   } else {

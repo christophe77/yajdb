@@ -1,23 +1,17 @@
 import fs from "fs";
-import path from "path";
 import {
   CommonOperationResponse,
   TableStructure,
 } from "../../types/operations";
-
-const fileExistsAsync = async (filePath: string) =>
-  !!(await fs.promises.stat(filePath).catch((_) => false));
-
-const tableFullPath = (dbName: string, tableName: string): string =>
-  `${path.join(dbRootPath, dbName, tableName)}.json`;
+import { fileExistsAsync, fullJsonPath } from "../../utils";
 
 export function create(
   dbName: string,
   tableName: string,
   structure: TableStructure[]
 ): CommonOperationResponse {
-  const tableFile = tableFullPath(dbName, tableName);
-  const tableStructureFile = tableFullPath(dbName, `${tableName}-col`);
+  const tableFile = fullJsonPath([dbName, tableName]);
+  const tableStructureFile = fullJsonPath([dbName, `${tableName}-col`]);
   if (fs.existsSync(tableFile)) {
     return {
       success: false,
@@ -26,8 +20,8 @@ export function create(
   } else {
     try {
       const initialValue = {
-        [tableName] : []
-      }
+        [tableName]: [],
+      };
       fs.writeFileSync(
         tableStructureFile,
         `{ "structure" : ${JSON.stringify(structure)}}`
@@ -50,8 +44,8 @@ export async function createAsync(
   tableName: string,
   structure: TableStructure[]
 ): Promise<CommonOperationResponse> {
-  const tableFile = tableFullPath(dbName, tableName);
-  const tableStructureFile = tableFullPath(dbName, `${tableName}-col`);
+  const tableFile = fullJsonPath([dbName, tableName]);
+  const tableStructureFile = fullJsonPath([dbName, `${tableName}-col`]);
   const dbExists = await fileExistsAsync(tableFile);
   if (dbExists) {
     return {
@@ -61,8 +55,8 @@ export async function createAsync(
   } else {
     try {
       const initialValue = {
-        [tableName] : []
-      }
+        [tableName]: [],
+      };
       await fs.promises.writeFile(
         tableStructureFile,
         `{ "structure" : ${JSON.stringify(structure)}}`

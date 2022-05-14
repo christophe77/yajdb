@@ -7,7 +7,7 @@ const path_1 = __importDefault(require("path"));
 const init_1 = __importDefault(require("./init"));
 const database_1 = __importDefault(require("./operations/database"));
 const table_1 = __importDefault(require("./operations/table"));
-globalThis.dbRootPath = path_1.default.join(path_1.default.resolve(__dirname), "storage");
+globalThis.dbRootPath = path_1.default.join(process.cwd(), "yajdb");
 (0, init_1.default)();
 const yajdb = {
     database: database_1.default,
